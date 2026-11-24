@@ -40,18 +40,44 @@
   function orderText(o,number){return `Olá! Quero fazer um pedido na Arena Beach Park.\nNome: ${o.customer_name||'Não informado'}\nMesa/quadra: ${o.location_label||'Não informado'}\n\n${o.items.map(x=>`• ${x.quantity}x ${x.name}${x.option?' ('+x.option+')':''} — ${currency(x.line_total)}`).join('\n')}\n\nTotal: ${currency(o.total)}${number?'\nPedido: '+number:''}`}
   async function submitOrder(){
     if(!cart.size){showToast('Adicione produtos antes de enviar');return}
-    const o=orderPayload(); if(!o.customer_name){document.getElementById('customerName').focus();showToast('Informe seu nome para identificar o pedido');return}
-    let orderId=null;
+    const o=orderPayload();
+    if(!o.customer_name){document.getElementById('customerName').focus();showToast('Informe seu nome para identificar o pedido');return}
+    const number=String(cfg.WHATSAPP_NUMBER||'').replace(/\\D/g,'');
+    if(number.length<12){showToast('Confira o número do WhatsApp em config.js (com 55, DDD e telefone).');return}
+
+    // Abra uma aba dentro do clique do usuário: depois do await do Supabase,
+    // navegadores podem bloquear window.open por não reconhecer mais o gesto.
+    const waTab=window.open('about:blank','_blank');
+    let saved=false;
     if(db){
-      const {data,error}=await db.from('orders').insert({customer_name:o.customer_name,location_label:o.location_label||null,items:o.items,total:o.total,status:'received',source:'menu'}).select('id,order_number').single();
-      if(error){console.error(error);showToast('Não foi possível registrar no sistema. Confira a conexão.');return} orderId=data.order_number||data.id;
+      // Não usar .select(): INSERT público é permitido, mas SELECT de pedidos
+      // é exclusivo do administrador. RETURNING exigiria também SELECT via RLS.
+      const {error}=await db.from('orders').insert({
+        customer_name:o.customer_name,
+        location_label:o.location_label||null,
+        items:o.items,
+        total:o.total,
+        status:'received',
+        source:'menu'
+      });
+      if(error){
+        console.error('Erro ao registrar pedido:',error);
+        if(waTab)waTab.close();
+        showToast('Falha ao registrar pedido: '+error.message);
+        document.getElementById('orderStatus').textContent='Pedido não registrado. Verifique a conexão e as permissões do Supabase.';
+        return;
+      }
+      saved=true;
     }
-    const number=String(cfg.WHATSAPP_NUMBER||'').replace(/\D/g,'');
-    if(number.length<12){showToast(db?'Pedido registrado, mas falta configurar o WhatsApp.':'Configure o número do WhatsApp e o Supabase para ativar os pedidos.');return}
-    const url=`https://wa.me/${number}?text=${encodeURIComponent(orderText(o,orderId))}`;
-    window.open(url,'_blank','noopener,noreferrer');
-    document.getElementById('orderStatus').textContent=db?'Pedido registrado. Confirme o envio da mensagem no WhatsApp.':'WhatsApp aberto. O pedido ainda não foi registrado no painel porque o Supabase não está configurado.';
-    if(db){cart.clear();updateCart();}
+
+    const url=`https://wa.me/${number}?text=${encodeURIComponent(orderText(o))}`;
+    if(waTab){waTab.location.href=url;}
+    else {window.location.href=url;return;}
+
+    document.getElementById('orderStatus').textContent=saved
+      ?'Pedido registrado no painel. Finalize o envio no WhatsApp.'
+      :'WhatsApp aberto. O pedido não foi registrado no painel porque o Supabase não está conectado.';
+    if(saved){cart.clear();updateCart();}
   }
   document.getElementById('sendOrder').addEventListener('click',submitOrder);
   document.getElementById('copyOrder').addEventListener('click',async()=>{if(!cart.size){showToast('Adicione algum item primeiro');return}const o=orderPayload(),text=orderText(o);try{await navigator.clipboard.writeText(text);showToast('Pedido copiado')}catch{showToast('Não foi possível copiar neste navegador')}});
