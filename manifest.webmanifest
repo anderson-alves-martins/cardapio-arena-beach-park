@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "Arena Beach Park",
+  "short_name": "Arena Beach Park",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F8F5EF",
+  "theme_color": "#103C3E",
+  "icons": [
+    {
+      "src": "assets/arena-beach-park-oficial.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
