@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4ebdc">
+  <meta name="description" content="Cardápio da Arena Beach Park: petiscos, espetos, cervejas, bebidas e refrigerantes. Confira os preços e monte sua seleção.">
+  <title>Cardápio | Arena Beach Park</title>
+  <style>
+    :root {
+      --bg: #f4ebdc;
+      --surface: #fff;
+      --ink: #1b4052;
+      --muted: #617078;
+      --line: #e7dac6;
+      --accent: #b75b27;
+      --accent-dark: #92471f;
+      --green: #327b88;
+      --green-soft: #e4efed;
+      --sand: #efdfc3;
+      --font: Inter, "Arial", sans-serif;
+      --display: Manrope, Inter, sans-serif;
+      --radius: 18px;
+      --shadow: 0 12px 32px rgba(27,64,82,.09);
+      --ease: cubic-bezier(.2,.7,.2,1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font-family: var(--font); font-size: 15px; line-height: 1.5; }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #d99a3d; outline-offset: 3px; }
+    a { color: inherit; }
+    .topbar { background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; backdrop-filter: blur(12px); }
+    .topbar-inner { max-width: 1180px; margin: auto; min-height: 76px; padding: 12px 24px; display: flex; align-items: center; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: 0 0 auto; }
+    .brand-mark { width: 68px; height: 56px; object-fit: contain; object-position: center; border-radius: 10px; border: 1px solid #e9d29b; background: var(--ink); box-shadow: 0 3px 8px rgba(27,64,82,.12); }
+    .top-search { flex: 1; max-width: 510px; margin-left: auto; position: relative; }
+    .top-search svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #7c8882; }
+    .top-search input { width: 100%; border: 1px solid #e1e5df; border-radius: 12px; background: #fbf7ef; height: 46px; padding: 0 16px 0 44px; color: var(--ink); }
+    .top-search input::placeholder { color: #77837c; }
+    .cart-top { border: 0; border-radius: 12px; background: var(--accent); color: white; padding: 12px 16px; display: flex; align-items: center; gap: 9px; font-weight: 750; cursor: pointer; transition: background .16s var(--ease), transform .16s var(--ease); white-space: nowrap; }
+    .cart-top:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .count-pill { min-width: 22px; height: 22px; border-radius: 50px; padding: 0 6px; background: white; color: var(--accent-dark); font-size: 12px; display: inline-grid; place-items: center; }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 24px 70px; }
+    .hero { min-height: 218px; border-radius: 24px; overflow: hidden; position: relative; padding: 29px 38px; display: flex; align-items: center; background: var(--ink); color: white; box-shadow: var(--shadow); }
+    .hero-copy { position: relative; z-index: 1; width: min(620px, 78%); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: #d9ede1; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; height: 2px; width: 22px; background: #ed765c; }
+    h1 { margin: 11px 0 7px; font: 800 clamp(29px, 4vw, 45px)/1.06 var(--display); letter-spacing: -.045em; }
+    .hero p { margin: 0; max-width: 450px; color: #e1e9e4; font-size: 15px; }
+    .hero-search { display: none; }
+    .hero-art { position: absolute; right: 28px; top: 50%; width: 250px; height: 206px; transform: translateY(-50%); opacity: 1; object-fit: contain; object-position: center; }
+    .quick-info { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 26px; }
+    .info-chip { display: inline-flex; align-items: center; gap: 8px; color: #35564c; background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 8px 13px; font-size: 12px; font-weight: 650; }
+    .info-chip svg { color: var(--green); }
+    .layout { display: grid; grid-template-columns: 202px minmax(0,1fr); gap: 27px; align-items: start; }
+    .category-nav { position: sticky; top: 96px; padding: 16px 11px; background: white; border: 1px solid var(--line); border-radius: 16px; }
+    .category-nav h2 { margin: 0 8px 10px; font: 800 11px var(--display); letter-spacing: .12em; text-transform: uppercase; color: #79837e; }
+    .category-nav a { display: flex; align-items: center; justify-content: space-between; gap: 6px; text-decoration: none; border-radius: 10px; padding: 11px 9px; color: #37534b; font-size: 13px; font-weight: 650; transition: .16s var(--ease); }
+    .category-nav a:hover, .category-nav a.active { background: var(--green-soft); color: var(--ink); }
+    .category-nav a span:last-child { color: #81908a; font-size: 11px; }
+    .menu-main { min-width: 0; }
+    .menu-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 0 0 14px; }
+    .menu-toolbar h2 { margin: 0; font: 800 20px var(--display); letter-spacing: -.03em; }
+    .results-label { color: var(--muted); font-size: 12px; }
+    .mobile-cats { display: none; }
+    .menu-section { margin: 0 0 25px; scroll-margin-top: 116px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 12px; padding: 5px 0 11px; border-bottom: 1px solid #dfe3dd; }
+    .section-head h3 { margin: 0; font: 800 21px/1.2 var(--display); letter-spacing: -.035em; }
+    .section-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .section-kicker { color: var(--muted); font-size: 11px; }
+    .product-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 12px; }
+    .product { display: flex; align-items: center; gap: 12px; min-width: 0; min-height: 94px; padding: 13px; background: white; border: 1px solid #ecebe5; border-radius: 15px; transition: border .16s var(--ease), box-shadow .16s var(--ease), transform .16s var(--ease); }
+    .product[hidden], .menu-section[hidden] { display: none !important; }
+    .product:hover { border-color: #c9d8ce; box-shadow: 0 7px 18px rgba(27,64,82,.06); transform: translateY(-1px); }
+    .food-icon { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; border-radius: 14px; background: #f3eee4; font-size: 23px; }
+    .product:nth-child(3n+2) .food-icon { background: #eef3ec; }
+    .product:nth-child(3n) .food-icon { background: #fff0dd; }
+    .product-info { min-width: 0; flex: 1; }
+    .product-name { margin: 0; font-size: 13px; line-height: 1.3; font-weight: 750; color: #203e35; }
+    .product-meta { margin: 4px 0 0; color: #77827c; font-size: 11px; }
+    .product-action { flex: 0 0 auto; display: flex; flex-direction: column; align-items: end; gap: 7px; }
+    .price { color: var(--ink); font-size: 13px; font-weight: 800; white-space: nowrap; }
+    .price-stack { display: flex; flex-direction: column; align-items: end; gap: 2px; font-size: 10px; line-height: 1.2; color: var(--muted); }
+    .price-stack b { color: var(--ink); font-size: 12px; }
+    .add-btn { min-width: 37px; height: 32px; border: 1px solid #e8c08a; border-radius: 10px; background: #fff6e8; color: var(--accent-dark); font-size: 19px; line-height: 1; font-weight: 650; cursor: pointer; transition: .16s var(--ease); }
+    .add-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .portion-select { max-width: 134px; border: 1px solid #e1e5df; border-radius: 8px; background: #fff; color: var(--ink); padding: 4px 20px 4px 7px; font-size: 10px; }
+    .day-tag { display: inline-block; margin: 0 0 3px; padding: 2px 7px; border-radius: 99px; background: #fff0dd; color: #a65320; font-size: 9px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .empty-search { display: none; margin: 28px 0; padding: 32px 20px; border: 1px dashed #cdd8d1; border-radius: 16px; color: var(--muted); text-align: center; }
+    .footer { margin-top: 38px; background: var(--ink); color: #fff; border-radius: 21px; padding: 25px 28px; display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 20px; }
+    .footer h2, .footer h3 { margin: 0 0 9px; font: 800 15px var(--display); }
+    .footer p { margin: 5px 0; color: #d5e0da; font-size: 12px; }
+    .footer a { color: #fff; text-decoration-color: #80a192; text-underline-offset: 3px; }
+    .footer-note { color: #a9beb3 !important; font-size: 11px !important; }
+    .overlay { position: fixed; inset: 0; z-index: 40; background: rgba(10,26,22,.44); opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); }
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .cart-drawer { position: fixed; z-index: 41; top: 0; right: 0; width: min(410px, 100%); height: 100dvh; background: var(--surface); box-shadow: -12px 0 40px rgba(0,0,0,.13); transform: translateX(105%); transition: transform .25s var(--ease); display: flex; flex-direction: column; }
+    .cart-drawer.open { transform: translateX(0); }
+    .drawer-head { padding: 21px 22px 16px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+    .drawer-head h2 { margin: 0; font: 800 21px var(--display); }
+    .close-btn { border: 0; background: #f1f3ef; border-radius: 50%; width: 36px; height: 36px; color: var(--ink); font-size: 20px; cursor: pointer; }
+    .cart-items { flex: 1; overflow: auto; padding: 10px 22px; }
+    .cart-empty { margin: 40px 0; text-align: center; color: var(--muted); }
+    .cart-empty .basket { font-size: 36px; display: block; margin-bottom: 9px; }
+    .cart-row { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .cart-row strong { font-size: 13px; }
+    .cart-row small { display: block; margin-top: 3px; color: var(--muted); }
+    .cart-row .line-total { font-weight: 800; white-space: nowrap; font-size: 13px; }
+    .quantity { display: inline-flex; align-items: center; gap: 8px; color: #314b43; font-size: 12px; }
+    .quantity button { border: 1px solid #dce4de; background: white; border-radius: 7px; width: 25px; height: 24px; color: var(--ink); cursor: pointer; }
+    .drawer-foot { padding: 17px 22px calc(18px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: #fff; }
+    .subtotal { display: flex; justify-content: space-between; margin: 0 0 13px; font-size: 14px; font-weight: 800; }
+    .copy-btn { width: 100%; border: 0; border-radius: 12px; background: var(--accent); color: white; padding: 14px 16px; font-weight: 800; cursor: pointer; transition: background .16s var(--ease); }
+    .copy-btn:hover { background: var(--accent-dark); }
+    .drawer-disclaimer { margin: 9px 0 0; color: #7c8982; font-size: 10px; text-align: center; }
+    .toast { position: fixed; z-index: 55; left: 50%; bottom: 24px; transform: translate(-50%, 18px); opacity: 0; pointer-events: none; background: #173c33; color: white; padding: 11px 16px; border-radius: 99px; box-shadow: var(--shadow); font-size: 12px; font-weight: 650; transition: .2s var(--ease); white-space: nowrap; }
+    .toast.show { opacity: 1; transform: translate(-50%,0); }
+    .mobile-cart { display: none; }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 170px minmax(0,1fr); gap: 17px; }
+      .product-list { grid-template-columns: 1fr; }
+      .hero-art { right: 6px; width: 190px; height: 156px; }
+      .footer { grid-template-columns: 1fr 1fr; }
+      .footer > :first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 640px) {
+      html { scroll-padding-top: 172px; }
+      .topbar-inner { min-height: 64px; padding: 9px 14px; gap: 9px; display: grid; grid-template-columns: minmax(0,1fr) auto; grid-template-areas: "brand cart" "search search"; }
+      .brand { grid-area: brand; }
+      .brand-mark { width: 54px; height: 44px; }
+      .top-search { display: block; grid-area: search; width: 100%; max-width: none; margin: 0; }
+      .top-search input { height: 40px; }
+      .cart-top { grid-area: cart; margin: 0; padding: 9px 12px; font-size: 12px; }
+      .page { padding: 15px 14px 96px; }
+      .hero { min-height: 202px; padding: 25px 20px; border-radius: 19px; }
+      .hero-copy { width: 70%; }
+      h1 { font-size: clamp(29px, 8vw, 37px); }
+      .hero p { max-width: 200px; font-size: 13px; }
+      .hero-art { width: 108px; height: 89px; right: 10px; opacity: 1; }
+      .quick-info { margin: 12px 0 13px; gap: 7px; }
+      .info-chip { font-size: 10px; padding: 7px 10px; }
+      .layout { display: block; }
+      .category-nav { display: none; }
+      .mobile-cats { display: flex; position: sticky; z-index: 15; top: 108px; gap: 8px; overflow-x: auto; margin: 0 -14px 14px; padding: 9px 14px; background: rgba(246,243,236,.96); scrollbar-width: none; }
+      .mobile-cats::-webkit-scrollbar { display:none; }
+      .mobile-cats a { flex: 0 0 auto; text-decoration: none; padding: 8px 12px; background: white; border: 1px solid var(--line); border-radius: 99px; color: #36544a; font-size: 11px; font-weight: 700; white-space: nowrap; }
+      .mobile-cats a.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+      .menu-toolbar { margin: 0 0 8px; }
+      .menu-toolbar h2 { font-size: 18px; }
+      .results-label { font-size: 10px; }
+      .menu-section { margin-bottom: 22px; scroll-margin-top: 168px; }
+      .section-head { padding: 4px 0 9px; }
+      .section-head h3 { font-size: 19px; }
+      .section-head p { font-size: 11px; }
+      .product-list { gap: 8px; padding-top: 9px; }
+      .product { min-height: 79px; padding: 10px; gap: 10px; border-radius: 13px; }
+      .food-icon { width: 42px; height: 42px; flex-basis: 42px; border-radius: 12px; font-size: 20px; }
+      .product-name { font-size: 12px; }
+      .product-meta { font-size: 10px; }
+      .price { font-size: 12px; }
+      .price-stack { font-size: 9px; }
+      .price-stack b { font-size: 11px; }
+      .add-btn { min-width: 34px; height: 30px; }
+      .portion-select { max-width: 112px; font-size: 9px; }
+      .footer { margin-top: 25px; padding: 21px 18px; grid-template-columns: 1fr; gap: 14px; border-radius: 17px; }
+      .footer > :first-child { grid-column: auto; }
+      .footer h2, .footer h3 { margin-bottom: 5px; }
+      .mobile-cart { position: fixed; z-index: 19; display: none; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
+      .mobile-cart.visible { display: block; }
+      .mobile-cart button { width: 100%; display: flex; justify-content: space-between; align-items: center; border: 0; border-radius: 14px; padding: 14px 16px; background: var(--accent); color: white; font-weight: 800; box-shadow: 0 8px 24px rgba(146,71,31,.26); cursor: pointer; }
+      .toast { bottom: calc(82px + env(safe-area-inset-bottom)); max-width: calc(100% - 26px); white-space: normal; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+  <style>
+    .order-fields{display:grid;grid-template-columns:1fr;gap:5px;margin:0 0 12px}.order-fields label{font-size:12px;font-weight:700;color:var(--muted);margin-top:5px}.order-fields input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 11px;background:#fff;color:var(--ink)}
+    .secondary-copy{margin-top:8px;background:#e9eee9;color:var(--ink)}.secondary-copy:hover{background:#dce7df}.admin-access{font-size:11px;opacity:.8}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#inicio" aria-label="Arena Beach Park, início">
+        <img class="brand-mark" src="assets/arena-beach-park-oficial.png" alt="Logo oficial da Arena Beach Park">
+      </a>
+      <label class="top-search">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.3 4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Buscar no cardápio" aria-label="Buscar no cardápio">
+      </label>
+      <button class="cart-top" id="openCart" type="button" aria-label="Abrir seleção">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="18" cy="20" r="1.4" fill="currentColor"/></svg>
+        <span>Minha seleção</span><span class="count-pill" id="countTop">0</span>
+      </button>
+    </div>
+  </header>
+  <main class="page" id="inicio">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <span class="eyebrow">Esporte, encontro e sabor</span>
+        <h1 id="hero-title">Cardápio da Arena</h1>
+        <p>Escolha seus petiscos e bebidas, confira os valores e monte sua seleção.</p>
+      </div>
+      <img class="hero-art" src="assets/arena-beach-park-oficial.png" alt="" aria-hidden="true" loading="eager">
+    </section>
+    <div class="quick-info" aria-label="Informações rápidas">
+      <span class="info-chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3.3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Cozinha: 18h–22h</span>
+      <span class="info-chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h16M6 20V9l6-5 6 5v11M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Bar: 17h–00h</span>
+      <span class="info-chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18 12 5l8 13H4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 18v-4h6v4" stroke="currentColor" stroke-width="1.8"/></svg> Domingo: Day Use 16h–22h</span>
+    </div>
+    <nav class="mobile-cats" aria-label="Categorias do cardápio">
+      <a href="#petiscos">Petiscos</a><a href="#espetos">Espetos</a><a href="#drinks">Drinks e cervejas</a><a href="#hidratacao">Hidratação</a><a href="#refrigerantes">Refrigerantes</a>
+    </nav>
+    <div class="layout">
+      <aside class="category-nav" aria-label="Categorias do cardápio">
+        <h2>Explore o menu</h2>
+        <a href="#petiscos" class="active"><span>Petiscos</span><span>14</span></a>
+        <a href="#espetos"><span>Espetos</span><span>6</span></a>
+        <a href="#drinks"><span>Drinks e cervejas</span><span>12</span></a>
+        <a href="#hidratacao"><span>Hidratação e energia</span><span>6</span></a>
+        <a href="#refrigerantes"><span>Refrigerantes</span><span>15</span></a>
+      </aside>
+      <div class="menu-main">
+        <div class="menu-toolbar"><h2>O que vai pedir?</h2><span class="results-label" id="resultCount">53 itens</span></div>
+        <p class="empty-search" id="emptySearch">Não encontramos itens com esse nome. Tente outra busca.</p>
+        <section class="menu-section" id="petiscos" data-category="Petiscos">
+          <div class="section-head"><div><h3>Petiscos</h3><p>Para compartilhar depois da quadra</p></div><span class="section-kicker">14 opções</span></div>
+          <div class="product-list">
+            <article class="product" data-name="Pão Carne Queijo" data-icon="🥪" data-prices="20.00">
+              <span class="food-icon" aria-hidden="true">🥪</span><div class="product-info"><h4 class="product-name">Pão Carne Queijo</h4><p class="product-meta">Porção única</p></div><div class="product-action"><span class="price">R$ 20,00</span><button class="add-btn" aria-label="Adicionar Pão Carne Queijo">+</button></div>
+            </article>
+            <article class="product" data-name="Pão Carne Queijo + Batata Frita" data-icon="🥪" data-prices="25.00">
+              <span class="food-icon" aria-hidden="true">🥪</span><div class="product-info"><h4 class="product-name">Pão Carne Queijo + Batata Frita</h4><p class="product-meta">Porção única</p></div><div class="product-action"><span class="price">R$ 25,00</span><button class="add-btn" aria-label="Adicionar Pão Carne Queijo + Batata Frita">+</button></div>
+            </article>
+            <article class="product" data-name="Batata Frita" data-icon="🍟" data-prices="30.00,22.50" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍟</span><div class="product-info"><h4 class="product-name">Batata Frita</h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 30,00</b></span><span>½ <b>R$ 22,50</b></span></span><select class="portion-select" aria-label="Porção de Batata Frita"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Batata Frita">+</button></div>
+            </article>
+            <article class="product" data-name="Batata Frita Completa" data-icon="🍟" data-prices="45.00,33.75" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍟</span><div class="product-info"><h4 class="product-name">Batata Frita Completa</h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 45,00</b></span><span>½ <b>R$ 33,75</b></span></span><select class="portion-select" aria-label="Porção de Batata Frita Completa"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Batata Frita Completa">+</button></div>
+            </article>
+            <article class="product" data-name="Salada de Tomate" data-icon="🥗" data-prices="15.00">
+              <span class="food-icon" aria-hidden="true">🥗</span><div class="product-info"><h4 class="product-name">Salada de Tomate</h4><p class="product-meta">Porção única</p></div><div class="product-action"><span class="price">R$ 15,00</span><button class="add-btn" aria-label="Adicionar Salada de Tomate">+</button></div>
+            </article>
+            <article class="product" data-name="Salada de Tomate + Queijo" data-icon="🥗" data-prices="23.00">
+              <span class="food-icon" aria-hidden="true">🥗</span><div class="product-info"><h4 class="product-name">Salada de Tomate + Queijo</h4><p class="product-meta">Porção única</p></div><div class="product-action"><span class="price">R$ 23,00</span><button class="add-btn" aria-label="Adicionar Salada de Tomate + Queijo">+</button></div>
+            </article>
+            <article class="product" data-name="Carne + Mandioca" data-icon="🍖" data-prices="49.90,34.90" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍖</span><div class="product-info"><h4 class="product-name">Carne + Mandioca</h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 49,90</b></span><span>½ <b>R$ 34,90</b></span></span><select class="portion-select" aria-label="Porção de Carne + Mandioca"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Carne + Mandioca">+</button></div>
+            </article>
+            <article class="product" data-name="Carne + Batata Frita" data-icon="🍖" data-prices="53.00,37.00" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍖</span><div class="product-info"><h4 class="product-name">Carne + Batata Frita</h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 53,00</b></span><span>½ <b>R$ 37,00</b></span></span><select class="portion-select" aria-label="Porção de Carne + Batata Frita"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Carne + Batata Frita">+</button></div>
+            </article>
+            <article class="product" data-name="Croquete 10 unidades" data-icon="🍽️" data-prices="36.00,25.20" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍽️</span><div class="product-info"><h4 class="product-name">Croquete <span class="product-meta">(10 unid.)</span></h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 36,00</b></span><span>½ <b>R$ 25,20</b></span></span><select class="portion-select" aria-label="Porção de Croquete"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Croquete">+</button></div>
+            </article>
+            <article class="product" data-name="Pastel de Queijo 10 unidades" data-icon="🥟" data-prices="36.00,27.00" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🥟</span><div class="product-info"><h4 class="product-name">Pastel de Queijo <span class="product-meta">(10 unid.)</span></h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 36,00</b></span><span>½ <b>R$ 27,00</b></span></span><select class="portion-select" aria-label="Porção de Pastel de Queijo"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Pastel de Queijo">+</button></div>
+            </article>
+            <article class="product" data-name="Quibe 10 unidades" data-icon="🍽️" data-prices="45.00,31.50" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍽️</span><div class="product-info"><h4 class="product-name">Quibe <span class="product-meta">(10 unid.)</span></h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 45,00</b></span><span>½ <b>R$ 31,50</b></span></span><select class="portion-select" aria-label="Porção de Quibe"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Quibe">+</button></div>
+            </article>
+            <article class="product" data-name="Isca de Peixe 500g" data-icon="🐟" data-prices="49.90">
+              <span class="food-icon" aria-hidden="true">🐟</span><div class="product-info"><h4 class="product-name">Isca de Peixe</h4><p class="product-meta">500 g · Porção única</p></div><div class="product-action"><span class="price">R$ 49,90</span><button class="add-btn" aria-label="Adicionar Isca de Peixe">+</button></div>
+            </article>
+            <article class="product" data-name="Frango Passarinho 800g" data-icon="🍗" data-prices="42.00,29.40" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍗</span><div class="product-info"><h4 class="product-name">Frango Passarinho <span class="product-meta">(800 g)</span></h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 42,00</b></span><span>½ <b>R$ 29,40</b></span></span><select class="portion-select" aria-label="Porção de Frango Passarinho"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Frango Passarinho">+</button></div>
+            </article>
+            <article class="product" data-name="Nuggets de Frango 300g" data-icon="🍗" data-prices="30.00,21.00" data-options="Completa,Meia porção">
+              <span class="food-icon" aria-hidden="true">🍗</span><div class="product-info"><h4 class="product-name">Nuggets de Frango <span class="product-meta">(300 g)</span></h4><p class="product-meta">Escolha a porção</p></div><div class="product-action"><span class="price-stack"><span>Completa <b>R$ 30,00</b></span><span>½ <b>R$ 21,00</b></span></span><select class="portion-select" aria-label="Porção de Nuggets de Frango"><option value="0">Completa</option><option value="1">½ porção</option></select><button class="add-btn" aria-label="Adicionar Nuggets de Frango">+</button></div>
+            </article>
+          </div>
+        </section>
+        <section class="menu-section" id="espetos" data-category="Espetos">
+          <div class="section-head"><div><h3>Espetos</h3><p>Para acompanhar o jogo e a resenha</p></div><span class="section-kicker">Oferta do dia</span></div>
+          <div class="product-list">
+            <article class="product" data-name="Espeto Carne de Vaca" data-icon="🍢" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍢</span><div class="product-info"><span class="day-tag">Oferta do dia</span><h4 class="product-name">Carne de Vaca</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Espeto de Carne de Vaca">+</button></div></article>
+            <article class="product" data-name="Espeto Frango Bacon" data-icon="🍢" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍢</span><div class="product-info"><span class="day-tag">Oferta do dia</span><h4 class="product-name">Frango Bacon</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Espeto de Frango Bacon">+</button></div></article>
+            <article class="product" data-name="Espeto Queijo" data-icon="🍢" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍢</span><div class="product-info"><span class="day-tag">Oferta do dia</span><h4 class="product-name">Queijo</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Espeto de Queijo">+</button></div></article>
+            <article class="product" data-name="Espeto Queijo Bacon" data-icon="🍢" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍢</span><div class="product-info"><span class="day-tag">Oferta do dia</span><h4 class="product-name">Queijo Bacon</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Espeto de Queijo Bacon">+</button></div></article>
+            <article class="product" data-name="Espeto Coração" data-icon="🍢" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍢</span><div class="product-info"><span class="day-tag">Oferta do dia</span><h4 class="product-name">Coração</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Espeto de Coração">+</button></div></article>
+            <article class="product" data-name="Espeto Romeu e Julieta" data-icon="🍢" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍢</span><div class="product-info"><span class="day-tag">Oferta do dia</span><h4 class="product-name">Romeu e Julieta</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Espeto Romeu e Julieta">+</button></div></article>
+          </div>
+        </section>
+        <section class="menu-section" id="drinks" data-category="Drinks e cervejas">
+          <div class="section-head"><div><h3>Drinks e cervejas</h3><p>Uma pausa gelada entre as partidas</p></div><span class="section-kicker">12 opções</span></div>
+          <div class="product-list">
+            <article class="product" data-name="Rum Xeque Mate Guaraná 362ml" data-icon="🥤" data-prices="19.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Rum Xeque Mate Guaraná</h4><p class="product-meta">362 ml</p></div><div class="product-action"><span class="price">R$ 19,00</span><button class="add-btn" aria-label="Adicionar Rum Xeque Mate Guaraná">+</button></div></article>
+            <article class="product" data-name="51 Ice Limão" data-icon="🍋" data-prices="11.00"><span class="food-icon" aria-hidden="true">🍋</span><div class="product-info"><h4 class="product-name">51 Ice Limão</h4></div><div class="product-action"><span class="price">R$ 11,00</span><button class="add-btn" aria-label="Adicionar 51 Ice Limão">+</button></div></article>
+            <article class="product" data-name="51 Ice Balada" data-icon="🥤" data-prices="11.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">51 Ice Balada</h4></div><div class="product-action"><span class="price">R$ 11,00</span><button class="add-btn" aria-label="Adicionar 51 Ice Balada">+</button></div></article>
+            <article class="product" data-name="Heineken LN 330ml" data-icon="🍺" data-prices="11.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Heineken LN</h4><p class="product-meta">330 ml</p></div><div class="product-action"><span class="price">R$ 11,00</span><button class="add-btn" aria-label="Adicionar Heineken LN">+</button></div></article>
+            <article class="product" data-name="Heineken LN Zero 330ml" data-icon="🍺" data-prices="11.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Heineken LN Zero</h4><p class="product-meta">330 ml</p></div><div class="product-action"><span class="price">R$ 11,00</span><button class="add-btn" aria-label="Adicionar Heineken LN Zero">+</button></div></article>
+            <article class="product" data-name="Heineken 600ml" data-icon="🍺" data-prices="16.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Heineken</h4><p class="product-meta">600 ml</p></div><div class="product-action"><span class="price">R$ 16,00</span><button class="add-btn" aria-label="Adicionar Heineken 600 ml">+</button></div></article>
+            <article class="product" data-name="Michelob Ultra LN 330ml" data-icon="🍺" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Michelob Ultra LN</h4><p class="product-meta">330 ml</p></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Michelob Ultra LN">+</button></div></article>
+            <article class="product" data-name="Antarctica Boa Pilsen 600ml" data-icon="🍺" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Antarctica Boa Pilsen</h4><p class="product-meta">600 ml</p></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Antarctica Boa Pilsen">+</button></div></article>
+            <article class="product" data-name="Skol Pilsen 600ml" data-icon="🍺" data-prices="11.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Skol Pilsen</h4><p class="product-meta">600 ml</p></div><div class="product-action"><span class="price">R$ 11,00</span><button class="add-btn" aria-label="Adicionar Skol Pilsen">+</button></div></article>
+            <article class="product" data-name="Original 600ml" data-icon="🍺" data-prices="14.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Original</h4><p class="product-meta">600 ml</p></div><div class="product-action"><span class="price">R$ 14,00</span><button class="add-btn" aria-label="Adicionar Original">+</button></div></article>
+            <article class="product" data-name="Império Ultra" data-icon="🍺" data-prices="8.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Império Ultra</h4></div><div class="product-action"><span class="price">R$ 8,00</span><button class="add-btn" aria-label="Adicionar Império Ultra">+</button></div></article>
+            <article class="product" data-name="Stella Artois" data-icon="🍺" data-prices="10.00"><span class="food-icon" aria-hidden="true">🍺</span><div class="product-info"><h4 class="product-name">Stella Artois</h4></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Stella Artois">+</button></div></article>
+          </div>
+        </section>
+        <section class="menu-section" id="hidratacao" data-category="Hidratação e energia">
+          <div class="section-head"><div><h3>Hidratação e energia</h3><p>Para recarregar e voltar para o jogo</p></div><span class="section-kicker">6 opções</span></div>
+          <div class="product-list">
+            <article class="product" data-name="Powerade Sabores 500ml" data-icon="🧃" data-prices="9.00"><span class="food-icon" aria-hidden="true">🧃</span><div class="product-info"><h4 class="product-name">Powerade sabores</h4><p class="product-meta">500 ml</p></div><div class="product-action"><span class="price">R$ 9,00</span><button class="add-btn" aria-label="Adicionar Powerade">+</button></div></article>
+            <article class="product" data-name="Gatorade Sabores 500ml" data-icon="🧃" data-prices="10.00"><span class="food-icon" aria-hidden="true">🧃</span><div class="product-info"><h4 class="product-name">Gatorade sabores</h4><p class="product-meta">500 ml</p></div><div class="product-action"><span class="price">R$ 10,00</span><button class="add-btn" aria-label="Adicionar Gatorade">+</button></div></article>
+            <article class="product" data-name="Água Crystal 500ml" data-icon="💧" data-prices="3.50"><span class="food-icon" aria-hidden="true">💧</span><div class="product-info"><h4 class="product-name">Água Crystal</h4><p class="product-meta">500 ml</p></div><div class="product-action"><span class="price">R$ 3,50</span><button class="add-btn" aria-label="Adicionar Água Crystal">+</button></div></article>
+            <article class="product" data-name="Água Crystal com Gás 500ml" data-icon="💧" data-prices="4.00"><span class="food-icon" aria-hidden="true">💧</span><div class="product-info"><h4 class="product-name">Água Crystal com gás</h4><p class="product-meta">500 ml</p></div><div class="product-action"><span class="price">R$ 4,00</span><button class="add-btn" aria-label="Adicionar Água Crystal com gás">+</button></div></article>
+            <article class="product" data-name="Energético Red Bull" data-icon="⚡" data-prices="12.00"><span class="food-icon" aria-hidden="true">⚡</span><div class="product-info"><h4 class="product-name">Energético Red Bull</h4></div><div class="product-action"><span class="price">R$ 12,00</span><button class="add-btn" aria-label="Adicionar Energético Red Bull">+</button></div></article>
+            <article class="product" data-name="Energético Monster sabores" data-icon="⚡" data-prices="12.00"><span class="food-icon" aria-hidden="true">⚡</span><div class="product-info"><h4 class="product-name">Energético Monster sabores</h4></div><div class="product-action"><span class="price">R$ 12,00</span><button class="add-btn" aria-label="Adicionar Energético Monster">+</button></div></article>
+          </div>
+        </section>
+        <section class="menu-section" id="refrigerantes" data-category="Refrigerantes">
+          <div class="section-head"><div><h3>Refrigerantes</h3><p>Clássicos para acompanhar</p></div><span class="section-kicker">15 opções</span></div>
+          <div class="product-list">
+            <article class="product" data-name="Coca-Cola 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Coca-Cola</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Coca-Cola">+</button></div></article>
+            <article class="product" data-name="Coca-Cola Zero 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Coca-Cola Zero</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Coca-Cola Zero">+</button></div></article>
+            <article class="product" data-name="Sprite 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Sprite</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Sprite">+</button></div></article>
+            <article class="product" data-name="Sprite Zero 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Sprite Zero</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Sprite Zero">+</button></div></article>
+            <article class="product" data-name="Schweppes 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Schweppes</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Schweppes">+</button></div></article>
+            <article class="product" data-name="Fanta Laranja 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Fanta Laranja</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Fanta Laranja">+</button></div></article>
+            <article class="product" data-name="Fanta Uva 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Fanta Uva</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Fanta Uva">+</button></div></article>
+            <article class="product" data-name="Sprite Lemon Fresh 510ml" data-icon="🥤" data-prices="7.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Sprite Lemon Fresh</h4><p class="product-meta">510 ml</p></div><div class="product-action"><span class="price">R$ 7,00</span><button class="add-btn" aria-label="Adicionar Sprite Lemon Fresh">+</button></div></article>
+            <article class="product" data-name="Guaraná Kuat 310ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Guaraná Kuat</h4><p class="product-meta">310 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Guaraná Kuat">+</button></div></article>
+            <article class="product" data-name="Guaraná 350ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Guaraná</h4><p class="product-meta">350 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Guaraná">+</button></div></article>
+            <article class="product" data-name="Guaraná Zero 350ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Guaraná Zero</h4><p class="product-meta">350 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Guaraná Zero">+</button></div></article>
+            <article class="product" data-name="Pepsi Black 350ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Pepsi Black</h4><p class="product-meta">350 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Pepsi Black">+</button></div></article>
+            <article class="product" data-name="Pepsi Twist 350ml" data-icon="🥤" data-prices="6.00"><span class="food-icon" aria-hidden="true">🥤</span><div class="product-info"><h4 class="product-name">Pepsi Twist</h4><p class="product-meta">350 ml</p></div><div class="product-action"><span class="price">R$ 6,00</span><button class="add-btn" aria-label="Adicionar Pepsi Twist">+</button></div></article>
+            <article class="product" data-name="H2OH Limão 500ml" data-icon="💧" data-prices="7.00"><span class="food-icon" aria-hidden="true">💧</span><div class="product-info"><h4 class="product-name">H2OH Limão</h4><p class="product-meta">500 ml</p></div><div class="product-action"><span class="price">R$ 7,00</span><button class="add-btn" aria-label="Adicionar H2OH Limão">+</button></div></article>
+            <article class="product" data-name="H2OH Limoneto 500ml" data-icon="💧" data-prices="8.00"><span class="food-icon" aria-hidden="true">💧</span><div class="product-info"><h4 class="product-name">H2OH Limoneto</h4><p class="product-meta">500 ml</p></div><div class="product-action"><span class="price">R$ 8,00</span><button class="add-btn" aria-label="Adicionar H2OH Limoneto">+</button></div></article>
+          </div>
+        </section>
+      </div>
+    </div>
+    <footer class="footer">
+      <div><h2>Arena Beach Park</h2><p>Esporte, convivência e desenvolvimento do beach tennis.</p><p class="footer-note">Demais eventos e alterações de horários são comunicados pelo Instagram e WhatsApp.</p></div>
+      <div><h3>Funcionamento</h3><p><strong>Cozinha</strong> · segunda a sexta e domingo, 18h às 22h</p><p><strong>Bar</strong> · segunda a sexta e domingo, 17h às 00h</p><p><strong>Day Use</strong> · domingo, 16h às 22h</p></div>
+      <div><h3>Encontre a Arena</h3><p><a href="https://www.instagram.com/arenabeachpark/" target="_blank" rel="noopener noreferrer">Instagram · @arenabeachpark</a></p><p><a href="https://chartei.com/reserva/ARENABEACHPARK" target="_blank" rel="noopener noreferrer">Reservar quadra</a></p></div>
+    </footer>
+  </main>
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Minha seleção" aria-hidden="true">
+    <div class="drawer-head"><h2>Minha seleção</h2><button class="close-btn" id="closeCart" aria-label="Fechar seleção">×</button></div>
+    <div class="cart-items" id="cartItems"><div class="cart-empty"><span class="basket">🧺</span><strong>Sua seleção está vazia</strong><p>Use o + nos itens para montar sua lista.</p></div></div>
+    <div class="drawer-foot">
+      <div class="order-fields">
+        <label for="customerName">Seu nome</label><input id="customerName" type="text" maxlength="80" placeholder="Nome para identificar o pedido" autocomplete="name">
+        <label for="customerPlace">Mesa / quadra</label><input id="customerPlace" type="text" maxlength="40" placeholder="Ex.: Mesa 3 ou Quadra 2">
+      </div>
+      <p class="subtotal"><span>Subtotal</span><span id="subtotal">R$ 0,00</span></p><button class="copy-btn" id="sendOrder" type="button">Enviar pedido pelo WhatsApp</button>
+      <button class="copy-btn secondary-copy" id="copyOrder" type="button">Copiar pedido</button>
+      <p class="drawer-disclaimer" id="orderStatus">O pedido será registrado no sistema quando o Supabase estiver configurado. O envio pelo WhatsApp precisa ser confirmado por você.</p></div>
+  </aside>
+  <div class="mobile-cart" id="mobileCart"><button id="openCartMobile" type="button"><span><span id="countMobile">0</span> item(ns) na seleção</span><span>Ver seleção · <span id="totalMobile">R$ 0,00</span></span></button></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

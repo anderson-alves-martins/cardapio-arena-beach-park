@@ -1,0 +1,621 @@
+[
+  {
+    "name": "Pão Carne Queijo",
+    "category": "Petiscos",
+    "prices": [
+      20.0
+    ],
+    "options": [],
+    "icon": "🥪",
+    "active": true,
+    "sort_order": 1
+  },
+  {
+    "name": "Pão Carne Queijo + Batata Frita",
+    "category": "Petiscos",
+    "prices": [
+      25.0
+    ],
+    "options": [],
+    "icon": "🥪",
+    "active": true,
+    "sort_order": 2
+  },
+  {
+    "name": "Batata Frita",
+    "category": "Petiscos",
+    "prices": [
+      30.0,
+      22.5
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍟",
+    "active": true,
+    "sort_order": 3
+  },
+  {
+    "name": "Batata Frita Completa",
+    "category": "Petiscos",
+    "prices": [
+      45.0,
+      33.75
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍟",
+    "active": true,
+    "sort_order": 4
+  },
+  {
+    "name": "Salada de Tomate",
+    "category": "Petiscos",
+    "prices": [
+      15.0
+    ],
+    "options": [],
+    "icon": "🥗",
+    "active": true,
+    "sort_order": 5
+  },
+  {
+    "name": "Salada de Tomate + Queijo",
+    "category": "Petiscos",
+    "prices": [
+      23.0
+    ],
+    "options": [],
+    "icon": "🥗",
+    "active": true,
+    "sort_order": 6
+  },
+  {
+    "name": "Carne + Mandioca",
+    "category": "Petiscos",
+    "prices": [
+      49.9,
+      34.9
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍖",
+    "active": true,
+    "sort_order": 7
+  },
+  {
+    "name": "Carne + Batata Frita",
+    "category": "Petiscos",
+    "prices": [
+      53.0,
+      37.0
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍖",
+    "active": true,
+    "sort_order": 8
+  },
+  {
+    "name": "Croquete 10 unidades",
+    "category": "Petiscos",
+    "prices": [
+      36.0,
+      25.2
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍽️",
+    "active": true,
+    "sort_order": 9
+  },
+  {
+    "name": "Pastel de Queijo 10 unidades",
+    "category": "Petiscos",
+    "prices": [
+      36.0,
+      27.0
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🥟",
+    "active": true,
+    "sort_order": 10
+  },
+  {
+    "name": "Quibe 10 unidades",
+    "category": "Petiscos",
+    "prices": [
+      45.0,
+      31.5
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍽️",
+    "active": true,
+    "sort_order": 11
+  },
+  {
+    "name": "Isca de Peixe 500g",
+    "category": "Petiscos",
+    "prices": [
+      49.9
+    ],
+    "options": [],
+    "icon": "🐟",
+    "active": true,
+    "sort_order": 12
+  },
+  {
+    "name": "Frango Passarinho 800g",
+    "category": "Petiscos",
+    "prices": [
+      42.0,
+      29.4
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍗",
+    "active": true,
+    "sort_order": 13
+  },
+  {
+    "name": "Nuggets de Frango 300g",
+    "category": "Petiscos",
+    "prices": [
+      30.0,
+      21.0
+    ],
+    "options": [
+      "Completa",
+      "Meia porção"
+    ],
+    "icon": "🍗",
+    "active": true,
+    "sort_order": 14
+  },
+  {
+    "name": "Espeto Carne de Vaca",
+    "category": "Espetos",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍢",
+    "active": true,
+    "sort_order": 15
+  },
+  {
+    "name": "Espeto Frango Bacon",
+    "category": "Espetos",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍢",
+    "active": true,
+    "sort_order": 16
+  },
+  {
+    "name": "Espeto Queijo",
+    "category": "Espetos",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍢",
+    "active": true,
+    "sort_order": 17
+  },
+  {
+    "name": "Espeto Queijo Bacon",
+    "category": "Espetos",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍢",
+    "active": true,
+    "sort_order": 18
+  },
+  {
+    "name": "Espeto Coração",
+    "category": "Espetos",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍢",
+    "active": true,
+    "sort_order": 19
+  },
+  {
+    "name": "Espeto Romeu e Julieta",
+    "category": "Espetos",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍢",
+    "active": true,
+    "sort_order": 20
+  },
+  {
+    "name": "Rum Xeque Mate Guaraná 362ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      19.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 21
+  },
+  {
+    "name": "51 Ice Limão",
+    "category": "Drinks e cervejas",
+    "prices": [
+      11.0
+    ],
+    "options": [],
+    "icon": "🍋",
+    "active": true,
+    "sort_order": 22
+  },
+  {
+    "name": "51 Ice Balada",
+    "category": "Drinks e cervejas",
+    "prices": [
+      11.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 23
+  },
+  {
+    "name": "Heineken LN 330ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      11.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 24
+  },
+  {
+    "name": "Heineken LN Zero 330ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      11.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 25
+  },
+  {
+    "name": "Heineken 600ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      16.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 26
+  },
+  {
+    "name": "Michelob Ultra LN 330ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 27
+  },
+  {
+    "name": "Antarctica Boa Pilsen 600ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 28
+  },
+  {
+    "name": "Skol Pilsen 600ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      11.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 29
+  },
+  {
+    "name": "Original 600ml",
+    "category": "Drinks e cervejas",
+    "prices": [
+      14.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 30
+  },
+  {
+    "name": "Império Ultra",
+    "category": "Drinks e cervejas",
+    "prices": [
+      8.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 31
+  },
+  {
+    "name": "Stella Artois",
+    "category": "Drinks e cervejas",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🍺",
+    "active": true,
+    "sort_order": 32
+  },
+  {
+    "name": "Powerade Sabores 500ml",
+    "category": "Hidratação e energia",
+    "prices": [
+      9.0
+    ],
+    "options": [],
+    "icon": "🧃",
+    "active": true,
+    "sort_order": 33
+  },
+  {
+    "name": "Gatorade Sabores 500ml",
+    "category": "Hidratação e energia",
+    "prices": [
+      10.0
+    ],
+    "options": [],
+    "icon": "🧃",
+    "active": true,
+    "sort_order": 34
+  },
+  {
+    "name": "Água Crystal 500ml",
+    "category": "Hidratação e energia",
+    "prices": [
+      3.5
+    ],
+    "options": [],
+    "icon": "💧",
+    "active": true,
+    "sort_order": 35
+  },
+  {
+    "name": "Água Crystal com Gás 500ml",
+    "category": "Hidratação e energia",
+    "prices": [
+      4.0
+    ],
+    "options": [],
+    "icon": "💧",
+    "active": true,
+    "sort_order": 36
+  },
+  {
+    "name": "Energético Red Bull",
+    "category": "Hidratação e energia",
+    "prices": [
+      12.0
+    ],
+    "options": [],
+    "icon": "⚡",
+    "active": true,
+    "sort_order": 37
+  },
+  {
+    "name": "Energético Monster sabores",
+    "category": "Hidratação e energia",
+    "prices": [
+      12.0
+    ],
+    "options": [],
+    "icon": "⚡",
+    "active": true,
+    "sort_order": 38
+  },
+  {
+    "name": "Coca-Cola 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 39
+  },
+  {
+    "name": "Coca-Cola Zero 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 40
+  },
+  {
+    "name": "Sprite 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 41
+  },
+  {
+    "name": "Sprite Zero 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 42
+  },
+  {
+    "name": "Schweppes 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 43
+  },
+  {
+    "name": "Fanta Laranja 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 44
+  },
+  {
+    "name": "Fanta Uva 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 45
+  },
+  {
+    "name": "Sprite Lemon Fresh 510ml",
+    "category": "Refrigerantes",
+    "prices": [
+      7.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 46
+  },
+  {
+    "name": "Guaraná Kuat 310ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 47
+  },
+  {
+    "name": "Guaraná 350ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 48
+  },
+  {
+    "name": "Guaraná Zero 350ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 49
+  },
+  {
+    "name": "Pepsi Black 350ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 50
+  },
+  {
+    "name": "Pepsi Twist 350ml",
+    "category": "Refrigerantes",
+    "prices": [
+      6.0
+    ],
+    "options": [],
+    "icon": "🥤",
+    "active": true,
+    "sort_order": 51
+  },
+  {
+    "name": "H2OH Limão 500ml",
+    "category": "Refrigerantes",
+    "prices": [
+      7.0
+    ],
+    "options": [],
+    "icon": "💧",
+    "active": true,
+    "sort_order": 52
+  },
+  {
+    "name": "H2OH Limoneto 500ml",
+    "category": "Refrigerantes",
+    "prices": [
+      8.0
+    ],
+    "options": [],
+    "icon": "💧",
+    "active": true,
+    "sort_order": 53
+  }
+]
