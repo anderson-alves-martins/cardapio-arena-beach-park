@@ -42,7 +42,7 @@
     if(!cart.size){showToast('Adicione produtos antes de enviar');return}
     const o=orderPayload();
     if(!o.customer_name){document.getElementById('customerName').focus();showToast('Informe seu nome para identificar o pedido');return}
-    const number=String(cfg.WHATSAPP_NUMBER||'').replace(/\\D/g,'');
+    const number=String(cfg.WHATSAPP_NUMBER||'').replace(/\D/g,'');
     if(number.length<12){showToast('Confira o número do WhatsApp em config.js (com 55, DDD e telefone).');return}
 
     // Abra uma aba dentro do clique do usuário: depois do await do Supabase,
