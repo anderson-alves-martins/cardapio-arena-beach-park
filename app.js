@@ -31,7 +31,60 @@
     container.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>{const item=cart.get(b.dataset.key);if(!item)return;if(b.dataset.action==='plus')item.qty++;if(b.dataset.action==='minus')item.qty--;if(b.dataset.action==='remove'||item.qty<=0)cart.delete(b.dataset.key);updateCart()}));persist();
   }
   function bindProduct(el){const btn=el.querySelector('.add-btn');if(!btn||btn.dataset.bound)return;btn.dataset.bound='1';btn.addEventListener('click',()=>{const item=getSelected(el),key=keyFor(item.name,item.option),old=cart.get(key);if(old)old.qty++;else cart.set(key,{...item,qty:1});updateCart();showToast(item.name+' adicionado');});}
-  products.forEach(bindProduct);
+
+  const productNameOrder = new Intl.Collator('pt-BR', { sensitivity: 'base', numeric: true });
+  const categoryIcons = new Map([
+    ['Petiscos', '🍽️'],
+    ['Espetos', '🍢'],
+    ['Drinks e cervejas', '🍹'],
+    ['Hidratação e energia', '💧'],
+    ['Refrigerantes', '🥤']
+  ]);
+  const iconCorrections = new Map([
+    ['Croquete 10 unidades', ['🍽️', '🧆']],
+    ['Quibe 10 unidades', ['🍽️', '🧆']],
+    ['Nuggets de Frango 300g', ['🍗', '🧆']],
+    ['Rum Xeque Mate Guaraná 362ml', ['🥤', '🍹']],
+    ['51 Ice Limão', ['🍋', '🍹']],
+    ['51 Ice Balada', ['🥤', '🍹']],
+    ['H2OH Limão 500ml', ['💧', '🥤']],
+    ['H2OH Limoneto 500ml', ['💧', '🥤']]
+  ]);
+
+  function updateProductIcon(product, registeredIcon) {
+    const badge = product.querySelector('.food-icon');
+    const category = product.closest('.menu-section').dataset.category;
+    const savedIcon = typeof registeredIcon === 'string' ? registeredIcon.trim() : '';
+    const hasSavedIcon = /\p{Extended_Pictographic}|\p{Regional_Indicator}/u.test(savedIcon);
+    const correction = iconCorrections.get(product.dataset.name);
+    let icon = hasSavedIcon ? savedIcon : product.dataset.defaultIcon;
+    if (correction && (!icon || icon === correction[0])) icon = correction[1];
+    icon ||= categoryIcons.get(category) || '🍽️';
+
+    if (product.dataset.icon !== icon || !badge.hasChildNodes()) badge.textContent = icon;
+    product.dataset.icon = icon;
+  }
+
+  function sortProducts() {
+    for (const section of sections) {
+      const list = section.querySelector('.product-list');
+      const entries = [...list.querySelectorAll('.product')].map(element => ({
+        element,
+        name: element.querySelector('.product-name').textContent.trim()
+      }));
+      entries.sort((a, b) => productNameOrder.compare(a.name, b.name));
+      entries.forEach(({ element }, index) => {
+        if (list.children[index] !== element) list.insertBefore(element, list.children[index]);
+      });
+    }
+  }
+
+  products.forEach(product => {
+    product.dataset.defaultIcon = product.dataset.icon;
+    updateProductIcon(product);
+    bindProduct(product);
+  });
+  sortProducts();
   const drawer=document.getElementById('cartDrawer'),overlay=document.getElementById('overlay');
   function openCart(){drawer.classList.add('open');overlay.classList.add('open');drawer.setAttribute('aria-hidden','false');overlay.setAttribute('aria-hidden','false');document.getElementById('closeCart').focus()}
   function closeCart(){drawer.classList.remove('open');overlay.classList.remove('open');drawer.setAttribute('aria-hidden','true');overlay.setAttribute('aria-hidden','true')}
@@ -87,7 +140,7 @@
   const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('.category-nav a,.mobile-cats a').forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}),{rootMargin:'-25% 0px -65% 0px'});sections.forEach(s=>observer.observe(s));
   document.querySelectorAll('.category-nav a,.mobile-cats a').forEach(a=>a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(!target)return;e.preventDefault();if(search.value){search.value='';filterItems()}history.pushState(null,'',a.getAttribute('href'));document.querySelectorAll('.category-nav a,.mobile-cats a').forEach(x=>x.classList.toggle('active',x.getAttribute('href')===a.getAttribute('href')));requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}))}));
   // Supabase product sync: update prices and availability when configured; static HTML remains fallback.
-  async function syncProducts(){if(!db)return;const {data,error}=await db.from('products').select('*').order('sort_order');if(error){console.warn('Supabase products:',error.message);return}if(!data?.length)return;const existing=new Map([...document.querySelectorAll('.product')].map(el=>[el.dataset.name,el]));for(const p of data){let el=existing.get(p.name);if(!el&&p.active){const section=sections.find(x=>x.dataset.category===p.category);if(!section)continue;el=document.createElement('article');el.className='product';el.dataset.name=p.name;el.dataset.icon=p.icon||'•';const icon=document.createElement('span');icon.className='food-icon';icon.textContent=p.icon||'•';icon.setAttribute('aria-hidden','true');const info=document.createElement('div');info.className='product-info';const title=document.createElement('h4');title.className='product-name';title.textContent=p.name;info.append(title);const action=document.createElement('div');action.className='product-action';el.append(icon,info,action);section.querySelector('.product-list').append(el);products.push(el);existing.set(p.name,el)}if(!el)continue;el.hidden=!p.active;el.dataset.prices=(p.prices||[]).join(',');el.dataset.options=(p.options||[]).join(',');el.dataset.icon=p.icon||'•';const action=el.querySelector('.product-action');let price=el.querySelector('.price'),stack=el.querySelector('.price-stack');if(p.prices.length>1){if(!stack){stack=document.createElement('span');stack.className='price-stack';price?.replaceWith(stack)}stack.replaceChildren(...p.prices.map((v,i)=>{const line=document.createElement('span'),b=document.createElement('b');line.textContent=(p.options?.[i]||'Opção')+' ';b.textContent=currency(v);line.append(b);return line}))}else{if(stack){price=document.createElement('span');price.className='price';stack.replaceWith(price)}if(!price){price=document.createElement('span');price.className='price';action.prepend(price)}price.textContent=currency(p.prices[0])}let select=el.querySelector('.portion-select');if(p.prices.length>1){if(!select){select=document.createElement('select');select.className='portion-select';select.setAttribute('aria-label','Opção de '+p.name);action.append(select)}select.replaceChildren(...(p.options||[]).map((o,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=o;return opt}))}else select?.remove();if(!el.querySelector('.add-btn')){const btn=document.createElement('button');btn.className='add-btn';btn.type='button';btn.textContent='+';btn.setAttribute('aria-label','Adicionar '+p.name);action.append(btn)}bindProduct(el)}sections.forEach(section=>{const count=[...section.querySelectorAll('.product')].filter(x=>!x.hidden).length;const kicker=section.querySelector('.section-kicker');if(kicker)kicker.textContent=count+' opções';});filterItems()}
+  async function syncProducts(){if(!db)return;const {data,error}=await db.from('products').select('*').order('sort_order');if(error){console.warn('Supabase products:',error.message);return}if(!data?.length)return;const existing=new Map([...document.querySelectorAll('.product')].map(el=>[el.dataset.name,el]));for(const p of data){let el=existing.get(p.name);if(!el&&p.active){const section=sections.find(x=>x.dataset.category===p.category);if(!section)continue;el=document.createElement('article');el.className='product';el.dataset.name=p.name;const icon=document.createElement('span');icon.className='food-icon';icon.setAttribute('aria-hidden','true');const info=document.createElement('div');info.className='product-info';const title=document.createElement('h4');title.className='product-name';title.textContent=p.name;info.append(title);const action=document.createElement('div');action.className='product-action';el.append(icon,info,action);section.querySelector('.product-list').append(el);products.push(el);existing.set(p.name,el)}if(!el)continue;el.hidden=!p.active;el.dataset.prices=(p.prices||[]).join(',');el.dataset.options=(p.options||[]).join(',');updateProductIcon(el,p.icon);const action=el.querySelector('.product-action');let price=el.querySelector('.price'),stack=el.querySelector('.price-stack');if(p.prices.length>1){if(!stack){stack=document.createElement('span');stack.className='price-stack';price?.replaceWith(stack)}stack.replaceChildren(...p.prices.map((v,i)=>{const line=document.createElement('span'),b=document.createElement('b');line.textContent=(p.options?.[i]||'Opção')+' ';b.textContent=currency(v);line.append(b);return line}))}else{if(stack){price=document.createElement('span');price.className='price';stack.replaceWith(price)}if(!price){price=document.createElement('span');price.className='price';action.prepend(price)}price.textContent=currency(p.prices[0])}let select=el.querySelector('.portion-select');if(p.prices.length>1){if(!select){select=document.createElement('select');select.className='portion-select';select.setAttribute('aria-label','Opção de '+p.name);action.append(select)}select.replaceChildren(...(p.options||[]).map((o,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=o;return opt}))}else select?.remove();if(!el.querySelector('.add-btn')){const btn=document.createElement('button');btn.className='add-btn';btn.type='button';btn.textContent='+';btn.setAttribute('aria-label','Adicionar '+p.name);action.append(btn)}bindProduct(el)}sections.forEach(section=>{const count=[...section.querySelectorAll('.product')].filter(x=>!x.hidden).length;const kicker=section.querySelector('.section-kicker');if(kicker)kicker.textContent=count+' opções';});sortProducts();filterItems()}
   updateCart();syncProducts();if(db){db.channel('public-menu-products').on('postgres_changes',{event:'*',schema:'public',table:'products'},syncProducts).subscribe();}
   if(!db){document.getElementById('orderStatus').textContent='Modo catálogo: configure config.js e o banco Supabase para registrar pedidos e sincronizar produtos. O WhatsApp também depende do número configurado.'}
 })();
